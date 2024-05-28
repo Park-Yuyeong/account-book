@@ -9,7 +9,7 @@ const InputForm = ({ itemList, setItemList }) => {
   const [content, setContent] = useState("");
 
   // 새로운 지출 내역 추가
-  const addExpenseItem = () => {
+  const addAccountBookItem = () => {
     if (date.length && category.length && cost !== 0 && content.length) {
       const newItem = {
         id: uuid(),
@@ -21,6 +21,10 @@ const InputForm = ({ itemList, setItemList }) => {
       };
 
       setItemList([...itemList, newItem]);
+      setDate("");
+      setCategory("");
+      setCost(0);
+      setContent("");
     } else {
       alert("알맞은 지출 양식을 작성해주세요!");
     }
@@ -75,7 +79,7 @@ const InputForm = ({ itemList, setItemList }) => {
           onChange={changeContentInputValue}
         />
       </StDiv>
-      <StInputButton onClick={addExpenseItem}>저장</StInputButton>
+      <StInputButton onClick={addAccountBookItem}>저장</StInputButton>
     </StInputSection>
   );
 };
@@ -116,6 +120,7 @@ const StInputButton = styled.button`
   border: none;
   border-radius: 4px;
   font-size: 14px;
+  font-weight: bold;
   cursor: pointer;
   margin-top: auto;
   margin-bottom: 2px;

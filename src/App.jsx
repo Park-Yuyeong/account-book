@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import styled from "styled-components";
 import Detail from "./pages/Detail";
 import Home from "./pages/Home";
 
@@ -21,7 +22,7 @@ function App() {
   }, [itemList, selectedMonth]);
 
   return (
-    <>
+    <StMain>
       <BrowserRouter>
         <Routes>
           <Route
@@ -35,11 +36,26 @@ function App() {
               />
             }
           />
-          <Route path="/detail/:id" element={<Detail />} />
+          <Route
+            path="/detail/:id"
+            element={<Detail itemList={itemList} setItemList={setItemList} />}
+          />
         </Routes>
       </BrowserRouter>
-    </>
+    </StMain>
   );
 }
+
+const StMain = styled.main`
+  width: 100%;
+  min-width: 600px;
+  max-width: 800px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 0px auto;
+  padding: 2rem;
+`;
 
 export default App;

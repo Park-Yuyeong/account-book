@@ -3,6 +3,10 @@
    License: none (public domain)
 */
 
+a {
+  text-decoration: none;
+}
+
 html,
 body,
 div,
@@ -19,7 +23,6 @@ h6,
 p,
 blockquote,
 pre,
-a,
 abbr,
 acronym,
 address,

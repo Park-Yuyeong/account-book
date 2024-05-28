@@ -5,7 +5,7 @@ const ExpenditureItem = ({ item }) => {
   const { id, date, category, cost, content } = item;
 
   return (
-    <Link to={`/detail/${id}`} style={StLink}>
+    <Link to={`/detail/${id}`}>
       <StItemWrapper>
         <StItemContent>
           <span id="date">{date}</span>
@@ -15,10 +15,6 @@ const ExpenditureItem = ({ item }) => {
       </StItemWrapper>
     </Link>
   );
-};
-
-const StLink = {
-  textDecoration: "none",
 };
 
 const StItemWrapper = styled.div`
@@ -67,6 +63,7 @@ const StItemCost = styled.span`
   font-size: 16px;
   color: #2ec4b6;
   font-weight: 600;
+  min-width: fit-content;
 `;
 
 export default ExpenditureItem;

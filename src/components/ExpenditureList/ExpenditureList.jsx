@@ -7,7 +7,9 @@ const ExpenditureList = ({ itemList, selectedMonth }) => {
       {itemList.filter((item) => item.month === selectedMonth).length === 0 ? (
         <StBlankDiv>지출 내역이 없습니다🍃</StBlankDiv>
       ) : (
-        itemList.map((item) => <ExpenditureItem key={item.id} item={item} />)
+        itemList
+          .sort((a, b) => (a.date < b.date ? 1 : -1))
+          .map((item) => <ExpenditureItem key={item.id} item={item} />)
       )}
     </StListSection>
   );
