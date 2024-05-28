@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import { ExpenditureContext } from "../../context/ExpenditureContext";
 
-const Detail = ({ itemList, setItemList }) => {
+const Detail = () => {
   const navigate = useNavigate();
   const params = useParams().id;
+
+  const { itemList, setItemList } = useContext(ExpenditureContext);
   const detailItem = itemList.find((item) => item.id === params);
 
   const { date, category, cost, content } = detailItem;

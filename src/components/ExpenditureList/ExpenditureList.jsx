@@ -1,13 +1,19 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import { ExpenditureContext } from "../../context/ExpenditureContext";
 import ExpenditureItem from "../ExpenditureItem";
 
-const ExpenditureList = ({ itemList, selectedMonth }) => {
+const ExpenditureList = () => {
+  const { itemList, selectedMonth } = useContext(ExpenditureContext);
+
+  const filteredList = itemList.filter((item) => item.month === selectedMonth);
+
   return (
     <StListSection>
-      {itemList.filter((item) => item.month === selectedMonth).length === 0 ? (
+      {filteredList.length === 0 ? (
         <StBlankDiv>지출 내역이 없습니다🍃</StBlankDiv>
       ) : (
-        itemList
+        filteredList
           .sort((a, b) => (a.date < b.date ? 1 : -1))
           .map((item) => <ExpenditureItem key={item.id} item={item} />)
       )}

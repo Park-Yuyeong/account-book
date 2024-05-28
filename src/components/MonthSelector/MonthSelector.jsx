@@ -1,8 +1,12 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import { ExpenditureContext } from "../../context/ExpenditureContext";
 
 const MONTHS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-const MonthSelector = ({ selectedMonth, setSelectedMonth }) => {
+const MonthSelector = () => {
+  const { selectedMonth, setSelectedMonth } = useContext(ExpenditureContext);
+
   const clickMonth = (month) => setSelectedMonth(month);
 
   return (
