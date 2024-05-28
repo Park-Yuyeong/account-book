@@ -1,28 +1,29 @@
-import { useState } from "react";
+import { useContext, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import { ExpenditureContext } from "../../context/ExpenditureContext";
 
-const Detail = ({ itemList, setItemList }) => {
+const Detail = () => {
   const navigate = useNavigate();
   const params = useParams().id;
+
+  const { itemList, setItemList } = useContext(ExpenditureContext);
   const detailItem = itemList.find((item) => item.id === params);
 
   const { date, category, cost, content } = detailItem;
 
-  const [detailDate, setDetailDate] = useState(date);
-  const [detailCategory, setDetailCategory] = useState(category);
-  const [detailCost, setDetailCost] = useState(cost);
-  const [detailContent, setDetailContent] = useState(content);
-
-  const changeDetailPageDateInputValue = (e) => setDetailDate(e.target.value);
-  const changeDetailPageCategoryInputValue = (e) =>
-    setDetailCategory(e.target.value);
-  const changeDetailPageCostInputValue = (e) => setDetailCost(e.target.value);
-  const changeDetailPageContentInputValue = (e) =>
-    setDetailContent(e.target.value);
+  const refDate = useRef("");
+  const refCategory = useRef("");
+  const refCost = useRef(0);
+  const refContent = useRef("");
 
   // 지출 내역 수정
   const modifyAccountBookItem = () => {
+    const detailDate = refDate.current.value.trim();
+    const detailCategory = refCategory.current.value.trim();
+    const detailCost = refCost.current.value.trim();
+    const detailContent = refContent.current.value.trim();
+
     if (
       detailDate.length &&
       detailCategory.length &&
@@ -76,8 +77,8 @@ const Detail = ({ itemList, setItemList }) => {
           placeholder="YYYY-MM-DD"
           min="2024-01-01"
           max="2024-12-31"
-          value={detailDate}
-          onChange={changeDetailPageDateInputValue}
+          ref={refDate}
+          defaultValue={date}
         />
       </StDiv>
       <StDiv>
@@ -86,8 +87,8 @@ const Detail = ({ itemList, setItemList }) => {
           id="detail-category"
           type="text"
           placeholder="지출 항목"
-          value={detailCategory}
-          onChange={changeDetailPageCategoryInputValue}
+          ref={refCategory}
+          defaultValue={category}
         />
       </StDiv>
       <StDiv>
@@ -96,8 +97,8 @@ const Detail = ({ itemList, setItemList }) => {
           id="detail-cost"
           type="number"
           placeholder="지출 금액"
-          value={detailCost}
-          onChange={changeDetailPageCostInputValue}
+          ref={refCost}
+          defaultValue={cost}
         />
       </StDiv>
       <StDiv>
@@ -106,8 +107,8 @@ const Detail = ({ itemList, setItemList }) => {
           id="detail-content"
           type="text"
           placeholder="지출 내용"
-          value={detailContent}
-          onChange={changeDetailPageContentInputValue}
+          ref={refContent}
+          defaultValue={content}
         />
       </StDiv>
       <StButtonDiv>
