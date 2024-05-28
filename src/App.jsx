@@ -1,35 +1,61 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import styled from "styled-components";
+import Detail from "./pages/Detail";
+import Home from "./pages/Home";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const todayMonth =
+    JSON.parse(localStorage.getItem("account-book-selected-month")) ??
+    new Date().getMonth() + 1;
+  const storedItemList = JSON.parse(localStorage.getItem("account-book")) ?? [];
+
+  const [itemList, setItemList] = useState(storedItemList);
+  const [selectedMonth, setSelectedMonth] = useState(todayMonth);
+
+  useEffect(() => {
+    localStorage.setItem("account-book", JSON.stringify(itemList));
+    localStorage.setItem(
+      "account-book-selected-month",
+      JSON.stringify(selectedMonth)
+    );
+  }, [itemList, selectedMonth]);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <StMain>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Home
+                itemList={itemList}
+                setItemList={setItemList}
+                selectedMonth={selectedMonth}
+                setSelectedMonth={setSelectedMonth}
+              />
+            }
+          />
+          <Route
+            path="/detail/:id"
+            element={<Detail itemList={itemList} setItemList={setItemList} />}
+          />
+        </Routes>
+      </BrowserRouter>
+    </StMain>
+  );
 }
 
-export default App
+const StMain = styled.main`
+  width: 100%;
+  min-width: 600px;
+  max-width: 800px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 0px auto;
+  padding: 2rem;
+`;
+
+export default App;
