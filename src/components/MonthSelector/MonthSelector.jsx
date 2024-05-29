@@ -1,13 +1,16 @@
-import { useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { ExpenditureContext } from "../../context/ExpenditureContext";
+import { changeSelectedMonth } from "../../redux/slices/selectedMonth.slice";
 
 const MONTHS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 const MonthSelector = () => {
-  const { selectedMonth, setSelectedMonth } = useContext(ExpenditureContext);
+  const dispatch = useDispatch();
+  const selectedMonth = useSelector(
+    (state) => state.selectedMonthSlice.selectedMonth
+  );
 
-  const clickMonth = (month) => setSelectedMonth(month);
+  const clickMonth = (month) => dispatch(changeSelectedMonth(month));
 
   return (
     <StMonthsSection>
