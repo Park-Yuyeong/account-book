@@ -1,13 +1,18 @@
-import { useContext, useRef } from "react";
+import { useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { ExpenditureContext } from "../../context/ExpenditureContext";
+import {
+  deleteExpenditureItem,
+  updateExpenditureItem,
+} from "../../redux/slices/expenditure.slice";
 
 const Detail = () => {
   const navigate = useNavigate();
   const params = useParams().id;
 
-  const { itemList, setItemList } = useContext(ExpenditureContext);
+  const dispatch = useDispatch();
+  const itemList = useSelector((state) => state.expenditureSlice.expenditure);
   const detailItem = itemList.find((item) => item.id === params);
 
   const { date, category, cost, content } = detailItem;
@@ -41,9 +46,7 @@ const Detail = () => {
           month: new Date(detailDate).getMonth() + 1,
         };
 
-        setItemList(
-          itemList.map((item) => (item.id === params ? changedItem : item))
-        );
+        dispatch(updateExpenditureItem(changedItem));
         navigate("/");
       } else {
         alert("수정이 취소되었습니다");
@@ -57,7 +60,7 @@ const Detail = () => {
   const deleteAccountBookItem = () => {
     const check = confirm("삭제하시겠습니까?");
     if (check) {
-      setItemList(itemList.filter((item) => item.id !== params));
+      dispatch(deleteExpenditureItem(params));
       navigate("/");
     } else {
       alert("삭제가 취소되었습니다");

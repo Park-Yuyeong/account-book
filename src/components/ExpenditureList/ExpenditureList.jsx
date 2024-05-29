@@ -1,10 +1,12 @@
-import { useContext } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { ExpenditureContext } from "../../context/ExpenditureContext";
 import ExpenditureItem from "../ExpenditureItem";
 
 const ExpenditureList = () => {
-  const { itemList, selectedMonth } = useContext(ExpenditureContext);
+  const itemList = useSelector((state) => state.expenditureSlice.expenditure);
+  const selectedMonth = useSelector(
+    (state) => state.selectedMonthSlice.selectedMonth
+  );
 
   const filteredList = itemList.filter((item) => item.month === selectedMonth);
 
