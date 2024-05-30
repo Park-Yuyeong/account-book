@@ -2,12 +2,14 @@ import styled from "styled-components";
 import ExpenditureItem from "../ExpenditureItem";
 
 const ExpenditureList = ({ itemList, selectedMonth }) => {
+  const filteredList = itemList.filter((item) => item.month === selectedMonth);
+
   return (
     <StListSection>
-      {itemList.filter((item) => item.month === selectedMonth).length === 0 ? (
+      {filteredList.length === 0 ? (
         <StBlankDiv>지출 내역이 없습니다🍃</StBlankDiv>
       ) : (
-        itemList
+        filteredList
           .sort((a, b) => (a.date < b.date ? 1 : -1))
           .map((item) => <ExpenditureItem key={item.id} item={item} />)
       )}

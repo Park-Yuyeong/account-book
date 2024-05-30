@@ -5,21 +5,25 @@ import Detail from "./pages/Detail";
 import Home from "./pages/Home";
 
 function App() {
-  const todayMonth =
-    JSON.parse(localStorage.getItem("account-book-selected-month")) ??
-    new Date().getMonth() + 1;
-  const storedItemList = JSON.parse(localStorage.getItem("account-book")) ?? [];
-
-  const [itemList, setItemList] = useState(storedItemList);
-  const [selectedMonth, setSelectedMonth] = useState(todayMonth);
+  const [itemList, setItemList] = useState(
+    () => JSON.parse(localStorage.getItem("account-book")) ?? []
+  );
+  const [selectedMonth, setSelectedMonth] = useState(
+    () =>
+      JSON.parse(localStorage.getItem("account-book-selected-month")) ??
+      new Date().getMonth() + 1
+  );
 
   useEffect(() => {
     localStorage.setItem("account-book", JSON.stringify(itemList));
+  }, [itemList]);
+
+  useEffect(() => {
     localStorage.setItem(
       "account-book-selected-month",
       JSON.stringify(selectedMonth)
     );
-  }, [itemList, selectedMonth]);
+  }, [selectedMonth]);
 
   return (
     <StMain>

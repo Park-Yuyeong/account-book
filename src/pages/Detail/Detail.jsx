@@ -4,8 +4,8 @@ import styled from "styled-components";
 
 const Detail = ({ itemList, setItemList }) => {
   const navigate = useNavigate();
-  const params = useParams().id;
-  const detailItem = itemList.find((item) => item.id === params);
+  const detailId = useParams().id;
+  const detailItem = itemList.find((item) => item.id === detailId);
 
   const { date, category, cost, content } = detailItem;
 
@@ -32,7 +32,7 @@ const Detail = ({ itemList, setItemList }) => {
       const check = confirm("수정하시겠습니까?");
       if (check) {
         const changedItem = {
-          id: params,
+          id: detailId,
           date: detailDate,
           category: detailCategory,
           cost: detailCost,
@@ -41,7 +41,7 @@ const Detail = ({ itemList, setItemList }) => {
         };
 
         setItemList(
-          itemList.map((item) => (item.id === params ? changedItem : item))
+          itemList.map((item) => (item.id === detailId ? changedItem : item))
         );
         navigate("/");
       } else {
@@ -56,7 +56,7 @@ const Detail = ({ itemList, setItemList }) => {
   const deleteAccountBookItem = () => {
     const check = confirm("삭제하시겠습니까?");
     if (check) {
-      setItemList(itemList.filter((item) => item.id !== params));
+      setItemList(itemList.filter((item) => item.id !== detailId));
       navigate("/");
     } else {
       alert("삭제가 취소되었습니다");
