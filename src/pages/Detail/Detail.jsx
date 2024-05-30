@@ -5,10 +5,10 @@ import { ExpenditureContext } from "../../context/ExpenditureContext";
 
 const Detail = () => {
   const navigate = useNavigate();
-  const params = useParams().id;
+  const detailId = useParams().id;
 
   const { itemList, setItemList } = useContext(ExpenditureContext);
-  const detailItem = itemList.find((item) => item.id === params);
+  const detailItem = itemList.find((item) => item.id === detailId);
 
   const { date, category, cost, content } = detailItem;
 
@@ -33,7 +33,7 @@ const Detail = () => {
       const check = confirm("수정하시겠습니까?");
       if (check) {
         const changedItem = {
-          id: params,
+          id: detailId,
           date: detailDate,
           category: detailCategory,
           cost: detailCost,
@@ -42,7 +42,7 @@ const Detail = () => {
         };
 
         setItemList(
-          itemList.map((item) => (item.id === params ? changedItem : item))
+          itemList.map((item) => (item.id === detailId ? changedItem : item))
         );
         navigate("/");
       } else {
@@ -57,7 +57,7 @@ const Detail = () => {
   const deleteAccountBookItem = () => {
     const check = confirm("삭제하시겠습니까?");
     if (check) {
-      setItemList(itemList.filter((item) => item.id !== params));
+      setItemList(itemList.filter((item) => item.id !== detailId));
       navigate("/");
     } else {
       alert("삭제가 취소되었습니다");
